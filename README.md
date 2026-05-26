@@ -5,7 +5,7 @@
 RSS агрегатор — веб-приложение для чтения RSS-лент. Позволяет добавлять и просматривать новостные потоки.
 
 ## Демо
-[Посмотреть демо на Vercel](https://vercel.com/kot-s-projects4/frontend-project-11)
+[Посмотреть демо на Vercel](https://frontend-project-11-git-main-kot-s-projects4.vercel.app)
 
 ## Установка
 ```bash
