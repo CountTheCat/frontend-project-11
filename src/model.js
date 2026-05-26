@@ -9,7 +9,6 @@ const state = proxy({
   feeds: [],
   feedback: {
     message: null,
-    type: null,
   },
 })
 

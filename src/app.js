@@ -10,26 +10,23 @@ const handleSubmit = (e) => {
   state.form.url = url
 
   state.feedback.message = null
-  state.feedback.type = null
 
   validate({ url })
     .then((errors) => {
       if (Object.keys(errors).length > 0) {
-        state.form.error = errors.url
+        state.form.error = errors.url === 'Не должно быть пустым' ? 'required' : 'url'
         state.form.valid = false
         return
       }
 
       if (state.feeds.includes(url)) {
-        state.feedback.message = 'RSS уже существует'
-        state.feedback.type = 'danger'
+        state.feedback.message = 'duplicate'
         resetForm()
         return
       }
 
       state.feeds = [...state.feeds, url]
-      state.feedback.message = 'RSS успешно загружен'
-      state.feedback.type = 'success'
+      state.feedback.message = 'success'
       resetForm()
     })
 }
@@ -38,7 +35,6 @@ const handleInput = () => {
   state.form.error = null
   state.form.valid = true
   state.feedback.message = null
-  state.feedback.type = null
 }
 
 export default () => {

@@ -1,9 +1,19 @@
 import './style.css'
+import i18next from 'i18next'
+import ru from './locales/ru.js'
 import initApp from './app.js'
 import { initElements, initWatchers } from './view.js'
 
-document.addEventListener('DOMContentLoaded', () => {
-  initElements()
-  initWatchers()
-  initApp()
+export default i18next.init({
+  lng: 'ru',
+  debug: false,
+  resources: {
+    ru,
+  },
+}).then(() => {
+  document.addEventListener('DOMContentLoaded', () => {
+    initElements()
+    initWatchers()
+    initApp()
+  })
 })

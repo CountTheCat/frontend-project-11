@@ -1,4 +1,5 @@
 import { subscribe } from 'valtio/vanilla'
+import i18next from 'i18next'
 import state from './model.js'
 
 let input
@@ -18,7 +19,7 @@ const initWatchers = () => {
     if (!input || !feedback) return
     if (state.form.error) {
       input.classList.add('is-invalid')
-      feedback.textContent = state.form.error
+      feedback.textContent = i18next.t(`errors.${state.form.error}`)
     }
     else {
       input.classList.remove('is-invalid')
@@ -45,8 +46,9 @@ const initWatchers = () => {
   subscribe(state.feedback, () => {
     if (!feedbackMessage) return
     if (state.feedback.message) {
-      feedbackMessage.textContent = state.feedback.message
-      feedbackMessage.className = `small mb-0 mt-1 text-${state.feedback.type}`
+      const type = state.feedback.message === 'duplicate' ? 'danger' : 'success'
+      feedbackMessage.textContent = i18next.t(state.feedback.message)
+      feedbackMessage.className = `small mb-0 mt-1 text-${type}`
     }
     else {
       feedbackMessage.textContent = ''
