@@ -1,15 +1,18 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import prettier from 'eslint-config-prettier';
+import js from '@eslint/js'
+import globals from 'globals'
+import stylistic from '@stylistic/eslint-plugin'
 
 export default [
   {
     ignores: ['dist/**', 'node_modules/**'],
   },
-  js.configs.recommended,
-  prettier,
+  stylistic.configs.recommended,
   {
-    files: ['**/*.{js,mjs,cjs,jsx}'],
+    files: ['**/*.{js,mjs,cjs}'],
+    plugins: {
+      js,
+    },
+    ...js.configs.recommended,
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
@@ -26,4 +29,4 @@ export default [
       'no-unused-expressions': 'error',
     },
   },
-];
+]

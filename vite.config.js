@@ -1,13 +1,13 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [],
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
+    rollupOptions: {
+      external: ['react', 'react-dom', /^react\/.*/],
+    },
   },
   server: {
     port: 3000,
     open: true,
   },
-});
+})
