@@ -5,8 +5,10 @@ const state = proxy({
     url: '',
     error: null,
     valid: true,
+    loading: false,
   },
   feeds: [],
+  posts: [],
   feedback: {
     message: null,
   },

@@ -1,6 +1,39 @@
+import axios from 'axios'
 import validate from './validate.js'
 import state from './model.js'
-import { resetForm } from './view.js'
+import parseRSS from './parser.js'
+import getProxyUrl from './proxy.js'
+
+const loadFeed = (url) => {
+  state.form.loading = true
+
+  return getProxyUrl(url)
+    .then((contents) => {
+      const { feed, posts } = parseRSS(contents)
+
+      const feedId = url
+      const newPosts = posts.map(post => ({
+        ...post,
+        feedId,
+      }))
+
+      state.posts = [...state.posts, ...newPosts]
+      state.feeds = [...state.feeds, { id: feedId, ...feed }]
+      state.feedback.message = 'success'
+    })
+    .catch((error) => {
+      if (error.message === 'parse') {
+        state.feedback.message = 'parse'
+      }
+      else if (axios.isAxiosError(error)) {
+        state.feedback.message = 'network'
+      }
+      else {
+        state.feedback.message = 'network'
+      }
+      state.form.loading = false
+    })
+}
 
 const handleSubmit = (e) => {
   e.preventDefault()
@@ -19,15 +52,12 @@ const handleSubmit = (e) => {
         return
       }
 
-      if (state.feeds.includes(url)) {
+      if (state.feeds.some(feed => feed.id === url)) {
         state.feedback.message = 'duplicate'
-        resetForm()
         return
       }
 
-      state.feeds = [...state.feeds, url]
-      state.feedback.message = 'success'
-      resetForm()
+      return loadFeed(url)
     })
 }
 
