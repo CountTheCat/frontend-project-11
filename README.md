@@ -1,8 +1,6 @@
 # RSS Агрегатор
-
-[![Actions Status](https://github.com/CountTheCat/rss-aggregator/workflows/hexlet-check/badge.svg)](https://github.com/ВАШ_АККАУНТ/rss-aggregator/actions)
-[![Maintainability](https://api.codeclimate.com/v1/badges/ВАШ_ID/maintainability)](https://codeclimate.com/github/CountTheCat/rss-aggregator/maintainability)
-
+[![Actions Status](https://github.com/CountTheCat/frontend-project-11/workflows/hexlet-check/badge.svg)](https://github.com/CountTheCat/frontend-project-11/actions)
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-light.svg)](https://sonarcloud.io/summary/new_code?id=CountTheCat_frontend-project-11)
 ## Описание
 RSS агрегатор — веб-приложение для чтения RSS-лент. Позволяет добавлять и просматривать новостные потоки.
 
