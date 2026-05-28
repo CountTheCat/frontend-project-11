@@ -8,12 +8,21 @@
   </head>
   <body>
     <div id="app">
-      <div class="container mt-5">
+      <div class="bg-dark text-white py-5 mb-4">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-8 col-lg-6 mx-auto">
+              <h1 class="display-5 fw-bold mb-2">RSS агрегатор</h1>
+              <p class="lead mb-0 text-white-50">Начните читать RSS сегодня! Это легко, это красиво.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
         <div class="row">
           <div class="col-12 col-md-8 col-lg-6 mx-auto">
-            <h1 class="mb-3">RSS агрегатор</h1>
-            <p class="mb-4 text-muted">Начните читать RSS сегодня! Это легко, это красиво.</p>
-            <div class="card">
+            <div class="card border-0 shadow-sm">
               <div class="card-body">
                 <form id="rss-form">
                   <div class="mb-3">
@@ -40,16 +49,30 @@
             </div>
             <div class="row mt-4">
               <div class="col-md-8" id="posts-container">
-                <!-- Посты -->
               </div>
               <div class="col-md-4" id="feeds-container">
-                <!-- Фиды -->
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="modal fade" id="post-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-title"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="modal-description"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <a href="#" class="btn btn-primary" id="modal-link" target="_blank" rel="noopener noreferrer">Читать полностью</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

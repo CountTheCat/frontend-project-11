@@ -1,5 +1,6 @@
 import { subscribe } from 'valtio/vanilla'
 import i18next from 'i18next'
+import { Modal } from 'bootstrap'
 import state from './model.js'
 
 let input
@@ -8,6 +9,10 @@ let feedbackMessage
 let feedsContainer
 let postsContainer
 let submitButton
+let modal
+let modalTitle
+let modalDescription
+let modalLink
 
 const initElements = () => {
   input = document.getElementById('url-input')
@@ -16,6 +21,10 @@ const initElements = () => {
   feedsContainer = document.getElementById('feeds-container')
   postsContainer = document.getElementById('posts-container')
   submitButton = document.getElementById('submit-button')
+  modal = new Modal(document.getElementById('post-modal'))
+  modalTitle = document.getElementById('modal-title')
+  modalDescription = document.getElementById('modal-description')
+  modalLink = document.getElementById('modal-link')
 }
 
 const renderFeeds = () => {
@@ -36,6 +45,20 @@ const renderFeeds = () => {
   `
 }
 
+const handlePostClick = (postId) => {
+  const post = state.posts.find(p => p.id === postId)
+  if (!post) return
+
+  if (!state.readPosts.includes(postId)) {
+    state.readPosts = [...state.readPosts, postId]
+  }
+
+  modalTitle.textContent = post.title
+  modalDescription.textContent = post.description || 'Нет описания'
+  modalLink.href = post.link
+  modal.show()
+}
+
 const renderPosts = () => {
   if (!postsContainer) return
   if (state.posts.length === 0) {
@@ -47,16 +70,25 @@ const renderPosts = () => {
     <h2 class="h4 mb-3">${i18next.t('posts')}</h2>
     <ul class="list-unstyled mb-0">
       ${state.posts.map((post) => {
+        const isRead = state.readPosts.includes(post.id)
         const isNew = post.isNew
         return `
           <li class="d-flex justify-content-between align-items-center mb-2 p-2 ${isNew ? 'border border-danger rounded' : ''}">
-            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="fw-semibold">${post.title}</a>
-            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">${i18next.t('view')}</a>
+            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="${isRead ? 'fw-normal' : 'fw-bold'}">${post.title}</a>
+            <button class="btn btn-outline-primary btn-sm" data-post-id="${post.id}">${i18next.t('view')}</button>
           </li>
         `
       }).join('')}
     </ul>
   `
+
+  const buttons = postsContainer.querySelectorAll('button[data-post-id]')
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const postId = button.dataset.postId
+      handlePostClick(postId)
+    })
+  })
 
   setTimeout(() => {
     state.posts.forEach((post) => {
@@ -64,6 +96,7 @@ const renderPosts = () => {
     })
   }, 5000)
 }
+
 const initWatchers = () => {
   subscribe(state, () => {
     if (input && feedback && submitButton) {

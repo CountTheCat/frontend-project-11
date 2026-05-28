@@ -12,6 +12,11 @@ const state = proxy({
   feedback: {
     message: null,
   },
+  modal: {
+    isOpen: false,
+    post: null,
+  },
+  readPosts: [],
 })
 
 export default state
