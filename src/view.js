@@ -5,6 +5,7 @@ import state from './model.js'
 
 let input
 let feedback
+let validationFeedback
 let feedbackMessage
 let feedsContainer
 let postsContainer
@@ -17,6 +18,7 @@ let modalLink
 const initElements = () => {
   input = document.getElementById('url-input')
   feedback = document.querySelector('.invalid-feedback')
+  validationFeedback = document.querySelector('.feedback')
   feedbackMessage = document.getElementById('feedback-message')
   feedsContainer = document.getElementById('feeds-container')
   postsContainer = document.getElementById('posts-container')
@@ -74,7 +76,7 @@ const renderPosts = () => {
         const isNew = post.isNew
         return `
           <li class="d-flex justify-content-between align-items-center mb-2 p-2 ${isNew ? 'border border-danger rounded' : ''}">
-            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="${isRead ? 'fw-normal' : 'fw-bold'}">${post.title}</a>
+            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="${isRead ? 'fw-normal link-secondary' : 'fw-bold'}">${post.title}</a>
             <button class="btn btn-outline-primary btn-sm" data-post-id="${post.id}">${i18next.t('view')}</button>
           </li>
         `
@@ -99,7 +101,7 @@ const renderPosts = () => {
 
 const initWatchers = () => {
   subscribe(state, () => {
-    if (input && feedback && submitButton) {
+    if (input && validationFeedback && submitButton) {
       if (state.form.loading) {
         submitButton.disabled = true
         submitButton.textContent = 'Загрузка...'
@@ -110,13 +112,13 @@ const initWatchers = () => {
       }
       if (state.form.error) {
         input.classList.add('is-invalid')
-        feedback.classList.add('feedback')
-        feedback.textContent = i18next.t(`errors.${state.form.error}`)
+        validationFeedback.style.display = 'block'
+        validationFeedback.textContent = i18next.t(`errors.${state.form.error}`)
       }
       else {
         input.classList.remove('is-invalid')
-        feedback.classList.remove('feedback')
-        feedback.textContent = ''
+        validationFeedback.style.display = 'none'
+        validationFeedback.textContent = ''
       }
     }
 
