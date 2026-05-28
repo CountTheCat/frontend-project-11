@@ -4,7 +4,6 @@ import { Modal } from 'bootstrap'
 import state from './model.js'
 
 let input
-let feedback
 let validationFeedback
 let feedbackMessage
 let feedsContainer
@@ -17,8 +16,7 @@ let modalLink
 
 const initElements = () => {
   input = document.getElementById('url-input')
-  feedback = document.querySelector('.invalid-feedback')
-  validationFeedback = document.querySelector('.feedback')
+  validationFeedback = document.getElementById('validation-feedback')
   feedbackMessage = document.getElementById('feedback-message')
   feedsContainer = document.getElementById('feeds-container')
   postsContainer = document.getElementById('posts-container')

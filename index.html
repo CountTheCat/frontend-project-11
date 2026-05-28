@@ -37,7 +37,7 @@
                           required
                         />
                         <div class="invalid-feedback"></div>
-                        <div class="feedback text-danger small mt-1" style="display: none;"></div>
+                        <div id="validation-feedback" class="text-danger small mt-1" style="display: none;"></div>
                       </div>
                       <div class="col-auto">
                         <button type="submit" class="btn btn-primary" id="submit-button">Добавить</button>
@@ -51,8 +51,10 @@
             </div>
             <div class="row mt-4">
               <div class="col-md-8 posts" id="posts-container">
+                <!-- Посты -->
               </div>
               <div class="col-md-4 feeds" id="feeds-container">
+                <!-- Фиды -->
               </div>
             </div>
           </div>
@@ -60,7 +62,7 @@
       </div>
     </div>
 
-    
+    <!-- Модальное окно -->
     <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
