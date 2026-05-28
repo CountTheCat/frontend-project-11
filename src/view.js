@@ -21,7 +21,7 @@ const initElements = () => {
   feedsContainer = document.getElementById('feeds-container')
   postsContainer = document.getElementById('posts-container')
   submitButton = document.getElementById('submit-button')
-  modal = new Modal(document.getElementById('post-modal'))
+  modal = new Modal(document.getElementById('modal'))
   modalTitle = document.getElementById('modal-title')
   modalDescription = document.getElementById('modal-description')
   modalLink = document.getElementById('modal-link')
@@ -110,10 +110,12 @@ const initWatchers = () => {
       }
       if (state.form.error) {
         input.classList.add('is-invalid')
+        feedback.classList.add('feedback')
         feedback.textContent = i18next.t(`errors.${state.form.error}`)
       }
       else {
         input.classList.remove('is-invalid')
+        feedback.classList.remove('feedback')
         feedback.textContent = ''
       }
     }

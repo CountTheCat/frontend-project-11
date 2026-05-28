@@ -13,11 +13,11 @@ export default {
     view: 'Просмотр',
     close: 'Закрыть',
     readFull: 'Читать полностью',
+    parseError: 'Ресурс не содержит валидный RSS',
+    networkError: 'Ошибка сети',
     errors: {
       required: 'Не должно быть пустым',
       url: 'Ссылка должна быть валидным URL',
-      network: 'Ошибка сети',
-      parse: 'Ресурс не содержит валидный RSS',
     },
   },
 }

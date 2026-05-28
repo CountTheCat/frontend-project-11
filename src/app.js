@@ -26,13 +26,13 @@ const loadFeed = (url) => {
     })
     .catch((error) => {
       if (error.message === 'parse') {
-        state.feedback.message = 'parse'
+        state.feedback.message = 'parseError'
       }
       else if (axios.isAxiosError(error)) {
-        state.feedback.message = 'network'
+        state.feedback.message = 'networkError'
       }
       else {
-        state.feedback.message = 'network'
+        state.feedback.message = 'networkError'
       }
       state.form.loading = false
     })
