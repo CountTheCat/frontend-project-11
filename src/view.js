@@ -38,7 +38,7 @@ const renderFeeds = () => {
     <h2 class="h4 mb-3">${i18next.t('feeds')}</h2>
     ${state.feeds.map(feed => `
       <div class="mb-3">
-        <h5 class="fw-bold mb-1">${feed.title}</h5>
+        <h3 class="h5 fw-bold mb-1">${feed.title}</h3>
         <p class="text-muted small mb-0">${feed.description}</p>
       </div>
     `).join('')}
@@ -122,7 +122,7 @@ const initWatchers = () => {
       if (state.feedback.message) {
         const type = state.feedback.message === 'success' ? 'success' : 'danger'
         feedbackMessage.textContent = i18next.t(state.feedback.message)
-        feedbackMessage.className = `small mb-0 mt-1 text-${type}`
+        feedbackMessage.className = `feedback small mb-0 mt-1 text-${type}`
 
         if (state.feedback.message === 'success') {
           input.value = ''
@@ -135,7 +135,7 @@ const initWatchers = () => {
       }
       else {
         feedbackMessage.textContent = ''
-        feedbackMessage.className = 'small mb-0 mt-1'
+        feedbackMessage.className = 'feedback small mb-0 mt-1'
       }
     }
 
