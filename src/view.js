@@ -4,7 +4,6 @@ import { Modal } from 'bootstrap'
 import state from './model.js'
 
 let input
-let validationFeedback
 let feedbackMessage
 let feedsContainer
 let postsContainer
@@ -16,7 +15,6 @@ let modalLink
 
 const initElements = () => {
   input = document.getElementById('url-input')
-  validationFeedback = document.getElementById('validation-feedback')
   feedbackMessage = document.getElementById('feedback-message')
   feedsContainer = document.getElementById('feeds-container')
   postsContainer = document.getElementById('posts-container')
@@ -99,7 +97,7 @@ const renderPosts = () => {
 
 const initWatchers = () => {
   subscribe(state, () => {
-    if (input && validationFeedback && submitButton) {
+    if (input && submitButton) {
       if (state.form.loading) {
         submitButton.disabled = true
         submitButton.textContent = 'Загрузка...'
@@ -110,13 +108,9 @@ const initWatchers = () => {
       }
       if (state.form.error) {
         input.classList.add('is-invalid')
-        validationFeedback.style.display = 'block'
-        validationFeedback.textContent = i18next.t(`errors.${state.form.error}`)
       }
       else {
         input.classList.remove('is-invalid')
-        validationFeedback.style.display = 'none'
-        validationFeedback.textContent = ''
       }
     }
 
@@ -134,6 +128,10 @@ const initWatchers = () => {
           state.form.loading = false
           input.focus()
         }
+      }
+      else if (state.form.error) {
+        feedbackMessage.textContent = i18next.t(`errors.${state.form.error}`)
+        feedbackMessage.className = 'feedback small mb-0 mt-1 text-danger'
       }
       else {
         feedbackMessage.textContent = ''
