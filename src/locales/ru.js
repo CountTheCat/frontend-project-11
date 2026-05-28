@@ -11,6 +11,8 @@ export default {
     feeds: 'Фиды',
     posts: 'Посты',
     view: 'Просмотр',
+    close: 'Закрыть',
+    readFull: 'Читать полностью',
     errors: {
       required: 'Не должно быть пустым',
       url: 'Ссылка должна быть валидным URL',
