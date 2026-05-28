@@ -46,16 +46,24 @@ const renderPosts = () => {
   postsContainer.innerHTML = `
     <h2 class="h4 mb-3">${i18next.t('posts')}</h2>
     <ul class="list-unstyled mb-0">
-      ${state.posts.map(post => `
-        <li class="d-flex justify-content-between align-items-center mb-2">
-          <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="fw-semibold">${post.title}</a>
-          <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">${i18next.t('view')}</a>
-        </li>
-      `).join('')}
+      ${state.posts.map((post) => {
+        const isNew = post.isNew
+        return `
+          <li class="d-flex justify-content-between align-items-center mb-2 p-2 ${isNew ? 'border border-danger rounded' : ''}">
+            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="fw-semibold">${post.title}</a>
+            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">${i18next.t('view')}</a>
+          </li>
+        `
+      }).join('')}
     </ul>
   `
-}
 
+  setTimeout(() => {
+    state.posts.forEach((post) => {
+      post.isNew = false
+    })
+  }, 5000)
+}
 const initWatchers = () => {
   subscribe(state, () => {
     if (input && feedback && submitButton) {

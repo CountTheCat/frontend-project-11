@@ -4,6 +4,8 @@ import state from './model.js'
 import parseRSS from './parser.js'
 import getProxyUrl from './proxy.js'
 
+const UPDATE_INTERVAL = 5000
+
 const loadFeed = (url) => {
   state.form.loading = true
 
@@ -15,9 +17,10 @@ const loadFeed = (url) => {
       const newPosts = posts.map(post => ({
         ...post,
         feedId,
+        isNew: true,
       }))
 
-      state.posts = [...state.posts, ...newPosts]
+      state.posts = [...newPosts, ...state.posts]
       state.feeds = [...state.feeds, { id: feedId, ...feed }]
       state.feedback.message = 'success'
     })
@@ -33,6 +36,38 @@ const loadFeed = (url) => {
       }
       state.form.loading = false
     })
+}
+
+const updateFeeds = () => {
+  if (state.feeds.length === 0) {
+    setTimeout(updateFeeds, UPDATE_INTERVAL)
+    return
+  }
+
+  const promises = state.feeds.map((feed) => {
+    return getProxyUrl(feed.id)
+      .then((contents) => {
+        const { posts } = parseRSS(contents)
+
+        const newPosts = posts.filter(
+          post => !state.posts.some(existingPost => existingPost.id === post.id),
+        )
+
+        if (newPosts.length > 0) {
+          const postsWithFeedId = newPosts.map(post => ({
+            ...post,
+            feedId: feed.id,
+            isNew: true,
+          }))
+          state.posts = [...postsWithFeedId, ...state.posts]
+        }
+      })
+      .catch(() => {})
+  })
+
+  return Promise.all(promises).then(() => {
+    setTimeout(updateFeeds, UPDATE_INTERVAL)
+  })
 }
 
 const handleSubmit = (e) => {
@@ -73,4 +108,6 @@ export default () => {
 
   form.addEventListener('submit', handleSubmit)
   input.addEventListener('input', handleInput)
+
+  setTimeout(updateFeeds, UPDATE_INTERVAL)
 }
